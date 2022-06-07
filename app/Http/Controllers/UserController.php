@@ -17,9 +17,11 @@ class UserController extends Controller
         //INNER JOIN de la tabla user_domicilio con user
         try {
             $users = User::join('user_domicilio', 'users.id', '=', 'user_domicilio.user_id')
-            ->selectRaw('TIMESTAMPDIFF(YEAR,users.fecha_nacimiento,CURDATE()) AS edad, user_domicilio.domicilio, users.name , users.fecha_nacimiento, user_domicilio.numero_exterior, user_domicilio.colonia, user_domicilio.cp , user_domicilio.ciudad')
+            //se agregá un campo más llamado edad en el resultado JSON
+            ->selectRaw('TIMESTAMPDIFF(YEAR,users.fecha_nacimiento,CURDATE()) 
+            AS edad, user_domicilio.domicilio, users.name , users.fecha_nacimiento, user_domicilio.numero_exterior, user_domicilio.colonia, user_domicilio.cp , user_domicilio.ciudad')
             ->get();
-            //y se agregará un campo mas llamado edad en el resultado JSON
+            //estado que se mostrará en respuesta JSON dependiendo del status
             return response()->json(['status' => 'OK', "data" => $users]);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'ERROR', "data" => $th]);
