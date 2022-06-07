@@ -25,6 +25,7 @@ $app = new Illuminate\Foundation\Application(
 | incoming requests to this application from both the web and CLI.
 |
 */
+//se agrega Access-Control-Allow-Origin para permitir el acceso Angular
 header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 $app->singleton(
